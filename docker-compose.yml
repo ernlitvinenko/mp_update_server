@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: mp_update
+      POSTGRES_PASSWORD: updateupdate
+      POSTGRES_DB: mp_update
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  application:
+    build: .
+    ports:
+      - "8001:8001"
+    environment:
+      POSTGRES_DSN: postgresql://mp_update:updateupdate@postgres:5432/mp_update?sslmode=disable
+    depends_on:
+      - postgres
+    command:
+      - "./main"
+
+volumes:
+  postgres_data:
