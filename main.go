@@ -32,7 +32,9 @@ func getVersionOfApp(c *fiber.Ctx) error {
 		c.Status(404).JSON(map[string]interface{}{})
 	}
 
-	c.JSON(version)
+	if err := c.JSON((*version)[0]); err != nil {
+		return err
+	}
 
 	return nil
 }
