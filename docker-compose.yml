@@ -17,10 +17,28 @@ services:
       - "8001:8001"
     environment:
       POSTGRES_DSN: postgresql://mp_update:updateupdate@postgres:5432/mp_update?sslmode=disable
+      S3_ACCESS_KEY_ID: mp_update
+      S3_EP: 10.2.101.91:9000
+      S3_SECRET_ACCESS: mp_update
     depends_on:
       - postgres
+      - minio
     command:
       - "./main"
 
+  minio:
+    image: 10.2.101.91:5000/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: jde_s3
+      MINIO_ROOT_PASSWORD: jdejdejde
+    volumes:
+      - minio_data:/data
+    command: server --console-address :9001 /data
+
+
 volumes:
   postgres_data:
+  minio_data:

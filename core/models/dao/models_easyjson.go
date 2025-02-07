@@ -221,10 +221,30 @@ func easyjsonD2b7633eDecodeMpUpdateServerGoCoreModelsDao2(in *jlexer.Lexer, out 
 			out.Id = string(in.String())
 		case "AppName":
 			out.AppName = string(in.String())
+		case "Description":
+			if in.IsNull() {
+				in.Skip()
+				out.Description = nil
+			} else {
+				if out.Description == nil {
+					out.Description = new(string)
+				}
+				*out.Description = string(in.String())
+			}
 		case "VersionId":
 			out.VersionId = string(in.String())
 		case "VersionCode":
 			out.VersionCode = int(in.Int())
+		case "VersionDescription":
+			if in.IsNull() {
+				in.Skip()
+				out.VersionDescription = nil
+			} else {
+				if out.VersionDescription == nil {
+					out.VersionDescription = new(string)
+				}
+				*out.VersionDescription = string(in.String())
+			}
 		case "Link":
 			out.Link = string(in.String())
 		default:
@@ -252,6 +272,15 @@ func easyjsonD2b7633eEncodeMpUpdateServerGoCoreModelsDao2(out *jwriter.Writer, i
 		out.String(string(in.AppName))
 	}
 	{
+		const prefix string = ",\"Description\":"
+		out.RawString(prefix)
+		if in.Description == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.Description))
+		}
+	}
+	{
 		const prefix string = ",\"VersionId\":"
 		out.RawString(prefix)
 		out.String(string(in.VersionId))
@@ -260,6 +289,15 @@ func easyjsonD2b7633eEncodeMpUpdateServerGoCoreModelsDao2(out *jwriter.Writer, i
 		const prefix string = ",\"VersionCode\":"
 		out.RawString(prefix)
 		out.Int(int(in.VersionCode))
+	}
+	{
+		const prefix string = ",\"VersionDescription\":"
+		out.RawString(prefix)
+		if in.VersionDescription == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.VersionDescription))
+		}
 	}
 	{
 		const prefix string = ",\"Link\":"
@@ -315,6 +353,16 @@ func easyjsonD2b7633eDecodeMpUpdateServerGoCoreModelsDao3(in *jlexer.Lexer, out 
 			out.Id = string(in.String())
 		case "appName":
 			out.AppName = string(in.String())
+		case "description":
+			if in.IsNull() {
+				in.Skip()
+				out.Description = nil
+			} else {
+				if out.Description == nil {
+					out.Description = new(string)
+				}
+				*out.Description = string(in.String())
+			}
 		case "versions":
 			if in.IsNull() {
 				in.Skip()
@@ -361,6 +409,15 @@ func easyjsonD2b7633eEncodeMpUpdateServerGoCoreModelsDao3(out *jwriter.Writer, i
 		const prefix string = ",\"appName\":"
 		out.RawString(prefix)
 		out.String(string(in.AppName))
+	}
+	{
+		const prefix string = ",\"description\":"
+		out.RawString(prefix)
+		if in.Description == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.Description))
+		}
 	}
 	{
 		const prefix string = ",\"versions\":"

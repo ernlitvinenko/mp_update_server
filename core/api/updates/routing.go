@@ -7,6 +7,7 @@ func InitRoutes(router fiber.Router) {
 	// TODO Write your endpoints here
 
 	group.Post("/create-app", CreateApplication)
+	group.Post("/upload", UploadApp)
 	group.Get("/list-app", ListApplications)
 	group.Post("/create", AddVersion)
 }
