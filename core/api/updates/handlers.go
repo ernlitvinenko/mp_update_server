@@ -9,7 +9,9 @@ import (
 	"mp_update_server_go/core/database"
 	"mp_update_server_go/core/models/dao"
 	"mp_update_server_go/core/models/requests"
+	"mp_update_server_go/core/models/responses"
 	"mp_update_server_go/core/storage/s3"
+	"net/http"
 )
 
 type UploadAppResponse struct {
@@ -119,6 +121,42 @@ func ListApplications(c *fiber.Ctx) error {
 	}
 
 	c.JSON(applications)
+
+	return nil
+}
+
+func DeleteVersion(c *fiber.Ctx) error {
+	db := database.InitializeDB()
+	app := c.Params("appName")
+	version := c.Params("version")
+
+	querySearch := "select id, app_id from version where id = $1 and app_id = $2"
+
+	rows, err := db.DbInstance.Query(querySearch, version, app)
+
+	if err != nil {
+		return err
+	}
+
+	if !(rows.Next()) {
+		c.Status(http.StatusNotFound)
+		c.JSON(responses.ErrorResponse{
+			Status: http.StatusNotFound,
+			Error:  "Версия не найдена",
+		})
+		return nil
+	}
+
+	query := "delete from version where id = $1 and app_id = $2"
+
+	_, err = db.DbInstance.Exec(query, version, app)
+
+	if err != nil {
+		return err
+	}
+
+	c.JSON(map[string]interface{}{"application": app, "version": version})
+	c.Status(http.StatusNoContent)
 
 	return nil
 }

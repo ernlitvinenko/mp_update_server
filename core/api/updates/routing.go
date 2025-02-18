@@ -10,4 +10,5 @@ func InitRoutes(router fiber.Router) {
 	group.Post("/upload", UploadApp)
 	group.Get("/list-app", ListApplications)
 	group.Post("/create", AddVersion)
+	group.Delete("/:appName/:version", DeleteVersion)
 }

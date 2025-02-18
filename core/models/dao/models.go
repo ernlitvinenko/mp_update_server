@@ -23,6 +23,14 @@ type Version struct {
 	Link        string  `json:"link" db:"link"`
 }
 
+type VersionForChangeLog struct {
+	Id          string  `json:"id" db:"id"`
+	AppId       string  `db:"app_id" json:"-"`
+	VersionCode int     `json:"versionCode" db:"version_code"`
+	Description *string `json:"description" db:"description"`
+	Link        string  `json:"link" db:"link"`
+}
+
 type ListApplicationDao struct {
 	Id                 string  `db:"id"`
 	AppName            string  `db:"name"`

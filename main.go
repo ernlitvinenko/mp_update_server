@@ -24,7 +24,7 @@ func getVersionOfApp(c *fiber.Ctx) error {
 
 	db := database.InitializeDB()
 
-	version := &[]dao.Version{}
+	version := &[]dao.VersionForChangeLog{}
 
 	if err := db.DbInstance.Select(version, "select * from version where app_id = $1 order by version_code desc limit 1", appName); err != nil {
 		return err
@@ -43,6 +43,7 @@ func getVersionOfApp(c *fiber.Ctx) error {
 
 func main() {
 	s3.New()
+	database.InitializeDB()
 
 	app := fiber.New(fiber.Config{
 		BodyLimit: 512 * 1024 * 1024,

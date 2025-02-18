@@ -12,7 +12,9 @@ services:
       - ./data:/var/lib/postgresql/data
 
   application:
+    image: 10.2.101.91:5000/mp_update_server:latest
     build: .
+    platform: linux/amd64
     ports:
       - "8001:8001"
     environment:
